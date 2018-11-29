@@ -1,0 +1,42 @@
+version: "3.2"
+services:
+  transmission:
+    image: haugene/transmission-openvpn
+    deploy:
+      replicas: 1
+      restart_policy: 
+        condition: on-failure
+    ports:
+      - "9091:9091"
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - "/dev/net/tun"
+    volumes:
+      - type: bind
+        source: /mnt/media/downloads
+        target: /data
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+    environment:
+      - OPENVPN_PROVIDER=MULLVAD
+      - OPENVPN_CONFIG='AU Brisbane'
+      - OPENVPN_USERNAME=5158614016006727
+      - OPENVPN_PASSWORD=m
+      - WEBPROXY_ENABLED='false'
+      - LOCAL_NETWORK=192.168.0.0/16
+    logging:
+      options:
+        max-size: '10m'
+        # max-file: '5'
+      driver: json-file
+    sysctls:
+        - net.ipv6.conf.all.disable_ipv6=0
+networks:
+  net:
+
+volumes:
+  docker:
+

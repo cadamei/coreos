@@ -1,0 +1,23 @@
+version: "3.2"
+services:
+  mqtt:
+    # replace username/repo:tag with your name and image details
+    image: mosquitto
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    networks:
+      - net
+    volumes:
+      - type: bind
+        source: /mnt/docker/mosquitto/config
+        target: /config
+networks:
+  net:
+volumes:
+  docker:
+
