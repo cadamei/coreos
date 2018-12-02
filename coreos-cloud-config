@@ -63,18 +63,18 @@ systemd:
         Type=nfs
         [Install]
         WantedBy=remote-fs.target
-    - name: install-docker-compose.service
-      command: start
-      contents: |
-        [Unit]
-        Description=Install docker-compose
-        ConditionPathExists=!/opt/bin/docker-compose
-        [Service]
-        Type=oneshot
-        RemainAfterExit=yes
-        ExecStart=/usr/bin/mkdir -p /opt/bin/
-        ExecStart=/usr/bin/curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` -o /opt/bin/docker-compose
-        ExecStart=/usr/bin/chmod +x /opt/bin/docker-compose
+    # - name: install-docker-compose.service
+    #   command: start
+    #   contents: |
+    #     [Unit]
+    #     Description=Install docker-compose
+    #     ConditionPathExists=!/opt/bin/docker-compose
+    #     [Service]
+    #     Type=oneshot
+    #     RemainAfterExit=yes
+    #     ExecStart=/usr/bin/mkdir -p /opt/bin/
+    #     ExecStart=/usr/bin/curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-`uname -s`-`uname -m` -o /opt/bin/docker-compose
+    #     ExecStart=/usr/bin/chmod +x /opt/bin/docker-compose
 etcd:
   # Generate a new token for the cluster from https://discovery.etcd.io/new
   discovery: https://discovery.etcd.io/244dd9f184c49967f20cd5a9269139ff
