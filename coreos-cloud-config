@@ -48,6 +48,7 @@ systemd:
         [Mount]
         What=192.168.2.12:/volume1/docker
         Where=/mnt/docker
+        Options=rw,sync,no_root_squash
         Type=nfs
         [Install]
         WantedBy=remote-fs.target
