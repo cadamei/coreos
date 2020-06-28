@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+
+  docker-vpn:
+    image: sgtsquiggs/deluge-openvpn
+    cap_add:
+      - NET_ADMIN
+
+
+
+
+docker run --cap-add=NET_ADMIN --device=/dev/net/tun -d \
+              --restart unless-stopped \
+              -v </path/to/deluge/config>:/config \
+              -v </path/to/your/downloads>:/downloads \
+              -v /etc/localtime:/etc/localtime:ro \
+              -e PUID=1001 \
+              -e PGID=1001 \
+              -e UMASK_SET=<022> \
+              -e TZ=<timezone> \
+              -e OPENVPN_PROVIDER=PIA \
+              -e OPENVPN_CONFIG=CA\ Toronto \
+              -e OPENVPN_USERNAME=user \
+              -e OPENVPN_PASSWORD=pass \
+              -e LOCAL_NETWORK=192.168.0.0/16 \
+              -p 8112:8112 \
+              sgtsquiggs/deluge-openvpn
